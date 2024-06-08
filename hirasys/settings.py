@@ -84,13 +84,10 @@ WSGI_APPLICATION = 'hirasys.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': os.getenv('MONGO_DB_NAME', 'admin'),
+        'NAME': os.getenv('MONGO_DB_NAME', 'master'),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': os.getenv('MONGO_HOST', 'mongodb://mongodb:27017'),
-            'username': os.getenv('MONGO_USER', 'root'),
-            'password': os.getenv('MONGO_PASSWORD', 'root'),
-            'authSource': 'admin',
+            'host': os.getenv('MONGO_URI', 'mongodb+srv://jimitparmar:L5BU33aP3zFsaNSJ@hirasysdb.q3uiqps.mongodb.net/'),
         },
     }
 }
