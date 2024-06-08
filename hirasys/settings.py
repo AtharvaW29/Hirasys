@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest-framework',
+    'rest_framework',
     'corsheaders',
 
     
@@ -83,19 +83,19 @@ WSGI_APPLICATION = 'hirasys.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'admin',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'db',
-        'PORT': '3306',
+        'ENGINE': 'djongo',
+        'NAME': os.getenv('MONGO_DB_NAME', 'admin'),
+        'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb://localhost:27017',
-            'port': 27017,
-        }
+            'host': os.getenv('MONGO_HOST', 'http://localhost:27017/'),
+            'username': os.getenv('MONGO_USER', 'root'),
+            'password': os.getenv('MONGO_PASSWORD', 'root'),
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1',
+        },
     }
 }
-
+ALLOWED_HOSTS = ['*']  # For development only; restrict in production
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
