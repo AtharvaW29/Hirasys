@@ -14,7 +14,8 @@ class Application(models.Model):
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Applied')
     scores = models.JSONField(blank=True, default=dict)  # Stores assessment scores
-    p2p_interview = models.CharField(max_length=255, blank=True)  # Optional: File path or URL for recording
+    cover_letter = models.TextField()
+    interview_feedback = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Data isolation for HR managers
 
     def __str__(self):
