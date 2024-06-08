@@ -8,17 +8,6 @@ services:
       - 8000:8000
     volumes:
       - .:/app
-    depends_on:
-      - mongodb
-      
-  mongodb:
-    image: mongo:4.4
-    restart: always
     environment:
-      MONGO_INITDB_DATABASE: admin
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-    volumes:
-      - .mongodata:/var/lib/mongodb
-    ports:
-      - 27017:27017
+      - MONGO_DB_NAME=master
+      - MONGO_URI=mongodb+srv://jimitparmar:L5BU33aP3zFsaNSJ@hirasysdb.q3uiqps.mongodb.net/master?retryWrites=true&w=majority

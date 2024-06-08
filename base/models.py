@@ -1,10 +1,11 @@
-from django.db import models
 
-# Create your db models here.
+from djongo import models
+from datetime import datetime
+
 class TestModel(models.Model):
     name = models.CharField(max_length=100)
-    age = models.IntegerField()
-    lastname = models.CharField(max_length=200)
+    description = models.TextField()
+    created_at = models.DateTimeField(default=datetime.now, editable=False)
 
     def __str__(self):
         return self.name
