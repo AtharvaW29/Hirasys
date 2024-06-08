@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db
+      - mongodb
 
   db:
     image: mysql:5.7.22
@@ -23,3 +23,15 @@ services:
       - .dbdata:/var/lib/mysql
     ports: 
       - 33066:3306
+  
+  mongodb:
+    image: mongo:4.4
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: admin
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - .mongodata:/var/lib/mongodb
+    ports:
+      - 27017:27017

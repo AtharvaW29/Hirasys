@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your db models here.
-class YourModel(models.Model):
+class TestModel(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
 
