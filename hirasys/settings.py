@@ -87,11 +87,10 @@ DATABASES = {
         'NAME': os.getenv('MONGO_DB_NAME', 'admin'),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': os.getenv('MONGO_HOST', 'http://localhost:27017/'),
+            'host': os.getenv('MONGO_HOST', 'mongodb://mongodb:27017'),
             'username': os.getenv('MONGO_USER', 'root'),
             'password': os.getenv('MONGO_PASSWORD', 'root'),
             'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1',
         },
     }
 }

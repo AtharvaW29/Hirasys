@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User  # Import User model (modify if using a custom User model)
-from .models import Candidate, Job
+from . import Candidate, Job
 
 class Application(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)

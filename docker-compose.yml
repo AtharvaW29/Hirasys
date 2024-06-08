@@ -10,20 +10,7 @@ services:
       - .:/app
     depends_on:
       - mongodb
-
-  db:
-    image: mysql:5.7.22
-    restart: always
-    environment:
-      MYSQL_DATABASE: admin
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
-    volumes: 
-      - .dbdata:/var/lib/mysql
-    ports: 
-      - 33066:3306
-  
+      
   mongodb:
     image: mongo:4.4
     restart: always
