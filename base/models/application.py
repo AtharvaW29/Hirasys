@@ -14,8 +14,8 @@ class Application(models.Model):
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Applied')
     scores = models.JSONField(blank=True, default=dict)  # Stores assessment scores
-    cover_letter = models.TextField()
-    interview_feedback = models.TextField()
+    cover_letter = models.CharField(max_lenght=500)
+    interview_feedback = models.CharField(max_lenght=200)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Data isolation for HR managers
 
     def __str__(self):

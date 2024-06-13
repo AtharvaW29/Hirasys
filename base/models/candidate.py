@@ -1,47 +1,46 @@
-
-from djongo import models
-from datetime import datetime
+from django.db import models
 from django.core.validators import RegexValidator
+from django.utils import timezone
 
-#Test model
-# class TestModel(models.Model):
-#     name = models.CharField(max_length=100)
-#     description = models.TextField()
-#     created_at = models.DateTimeField(default=datetime.now, editable=False)
-
-#     def __str__(self):
-#         return self.name
-
-# Embedded model for Application
 class Application(models.Model):
     job_title = models.CharField(max_length=255)
     company_name = models.CharField(max_length=255)
-    date_applied = models.DateField(default=datetime.now)
+    date_applied = models.DateTimeField(default=timezone.now)
 
-    class Meta:
-        abstract = True
+    def __str__(self):
+        return f"{self.job_title} at {self.company_name}"
 
-#Embedded model for skills
-class Skills(models.Model):
+class Skill(models.Model):
     skill = models.CharField(max_length=100)
 
-    class Meta:
-        abstract = True
+    def __str__(self):
+        return self.skill
 
-# Candidate model
+class Education(models.Model):
+    degree = models.CharField(max_length=100)
+    major = models.CharField(max_length=100)
+    university = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.degree} in {self.major} from {self.university}"
+
+class Experience(models.Model):
+    title = models.CharField(max_length=100)
+    company = models.CharField(max_length=100)
+    duration = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.title} at {self.company}"
 
 class Candidate(models.Model):
     phone_regex = RegexValidator(
-        regex=r'^\+?1?\d{9,10}',
+        regex=r'^\+?1?\d{9,10}$',
         message="Invalid Phone Number"
     )
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True)
-    education = models.JSONField(blank=True, default=dict)
-    experiences = models.JSONField(blank=True, default=dict)
-    skills = models.ArrayField(model_container=Skills)
-    applications = models.ArrayField(model_container=Application)
+    education = models.OneToOneField(Education, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

@@ -83,12 +83,12 @@ WSGI_APPLICATION = 'hirasys.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': os.getenv('MONGO_DB_NAME', 'master'),
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': os.getenv('MONGO_URI', 'mongodb+srv://jimitparmar:L5BU33aP3zFsaNSJ@hirasysdb.q3uiqps.mongodb.net/'),
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 ALLOWED_HOSTS = ['*']  # For development only; restrict in production
