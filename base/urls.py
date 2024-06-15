@@ -5,7 +5,7 @@ from . import views
 
 router = DefaultRouter()
 # router.register(r'testmodel', TestModelViewSet)
-router.register(r'candidate', CandidateViewSet)
+router.register(r'candidates', CandidateViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),  # Include router URLs here

@@ -12,6 +12,7 @@ services:
       - POSTGRES_DB=master
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+      - TZ =Etc/UTC
     depends_on:
       - db
   

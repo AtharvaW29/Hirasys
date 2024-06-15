@@ -89,6 +89,9 @@ DATABASES = {
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'HOST': 'db',
         'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c timezone=UTC',
+        }
     }
 }
 ALLOWED_HOSTS = ['*']  # For development only; restrict in production
@@ -121,7 +124,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

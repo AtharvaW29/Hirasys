@@ -40,7 +40,10 @@ class Candidate(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True)
-    education = models.OneToOneField(Education, on_delete=models.CASCADE)
+    education = models.ForeignKey(Education, on_delete=models.CASCADE, related_name="candidates")
+    experiences = models.ManyToManyField(Experience)
+    skills = models.ManyToManyField(Skill)
+    applications = models.ManyToManyField(Application)
 
     def __str__(self):
         return self.name
