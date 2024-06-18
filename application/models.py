@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Application(models.Model):
+    application_id = models.AutoField(primary_key=True)
     candidate_id = models.CharField(max_length=20)  # Use string reference
     applied_to_job = models.CharField(max_length=300)
     STATUS_CHOICES = (
@@ -16,7 +17,7 @@ class Application(models.Model):
     scores = models.JSONField(blank=True, default=dict)
     cover_letter = models.CharField(max_length=500)
     interview_feedback = models.CharField(max_length=200)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)  # Data isolation for HR managers
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)  # Data isolation for HR managers
     application_date = models.DateTimeField(auto_now_add=True)
     job_name = models.CharField(max_length=300)
 

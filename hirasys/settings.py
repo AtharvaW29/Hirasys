@@ -93,7 +93,7 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '5432',
         'OPTIONS': {
-            'options': '-c timezone=UTC',
+            'options': '-c search_path=public',
         }
     }
 }

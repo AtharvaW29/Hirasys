@@ -1,14 +1,12 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import CandidateViewSet
+from django.urls import path
 from . import views
 
-router = DefaultRouter()
-# router.register(r'testmodel', TestModelViewSet)
-router.register(r'candidates', CandidateViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),  # Include router URLs here
     path('home/', views.home, name="home"),
     path('room/', views.room, name="room"),
+    path('candidate/', views.CreateApplicationViewSet.as_view(), name='create-candidate'),
+    path('candidate/<int:candidate_id>/', views.getCandidateView, name="get-candidate"),
+    path('candidate/delete/<int:candidate_id>/', views.deleteCandidateView, name='delete-candidate'),
+    path('candidate/update/<int:candidate_id>/', views.updateCandidateView, name='update-candidate')
 ]
