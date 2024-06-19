@@ -1,0 +1,48 @@
+We're seeking a talented Junior Backend Developer to join our growing team! In this role, you'll be mentored by senior developers as you build and maintain backend systems using Python and Django, contributing to the entire development lifecycle from design to deployment.
+
+
+What you will do:
+
+Develop and maintain REST APIs using Django Rest Framework.
+Contribute to the design and implementation of new features and microservices.
+Write clean, efficient, and well-tested code.
+Collaborate with frontend developers, product managers, and other stakeholders.
+Participate in code reviews and learn from senior developers.
+Stay up-to-date with the latest advancements in Python and Django.
+
+
+What we are looking for:
+
+2+ years of experience working with Python and Django.
+Strong understanding of web development concepts and principles.
+Solid foundation in computer science fundamentals (data structures, algorithms).
+Excellent communication and collaboration skills.
+A willingness to learn and grow quickly.
+A passion for building high-quality software.
+
+
+Bonus points if you have:
+
+Experience with other Python libraries like Celery and uWSGI.
+Familiarity with databases like MySQL.
+Interest in cloud technologies like AWS, CI/CD pipelines, and Kubernetes.
+Experience with Javascript and frameworks like React.js.
+
+
+What we offer:
+
+A chance to work with a talented and supportive team.
+Continuous learning and development opportunities.
+A fun and collaborative work environment.
+
+
+Ready to join our team ? 
+We encourage you to apply! Tell us what excites you about backend development and why you'd be a great fit for our team.
+
+
+Why work at Talent500 ?
+
+Build the future of work: We're working on a problem every business leader understands deeply. The pandemic has created a “once-in-a-lifetime” shift in how businesses and professionals think about work. We have an opportunity to drive this new shift towards distributed work and global teams
+Growth and scale: We are tackling a global problem and a rapidly growing market ($50B+) with a LOT of headroom for us to grow. We are currently growing at 35% quarter-on-quarter and expect this to be a BIG, fast-growth business. If you are looking for growth in your professional life and lots of learning along the way, this is it.
+Experienced team and investors: We have an experienced team: our founders have founded, scaled, and sold companies before. We are trusted by some of the world’s best companies and investors
+Remote-first: We offer work-from-anywhere for multiple roles @ Talent500. We back this with plenty of remote-friendly policies for our team - including generous home-office setup budgets, flexible work / check-in hours, mobile and internet reimbursements, L&D budgets, best-in-class medical for you + family, mental health coaching and counseling support and more
