@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Application(models.Model):
     application_id = models.AutoField(primary_key=True)
-    candidate_id = models.CharField(max_length=20)  # Use string reference
+    candidate_id = models.IntegerField()
     applied_to_job = models.CharField(max_length=300)
     STATUS_CHOICES = (
         ('Applied', 'Applied'),
@@ -22,7 +22,7 @@ class Application(models.Model):
     job_name = models.CharField(max_length=300)
 
     def __str__(self):
-        return f"{self.candidate.name} - {self.applied_to_job.title}"
+        return f"{self.candidate_id} - {self.applied_to_job.title}"
     
     class Meta:
         ordering = ('-application_date', )

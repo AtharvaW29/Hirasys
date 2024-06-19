@@ -21,10 +21,12 @@ def getCandidateView(request, candidate_id):
     except Candidate.DoesNotExist:
         return Response({'error': 'No such Candidate with that primary key'}, status=status.HTTP_404_NOT_FOUND)
     
-    applications = Application.objects.filter(candidate=candidate)
+    applications = Application.objects.filter(candidate_id=candidate_id)
+    print(f"Applications for candidate {candidate_id}: {applications}") 
     app_res = ApplicationSerializer(applications, many=True)
     cand_res = CandidateSerializer(candidate)
 
+    print(f"Serialized applications: {app_res.data}") 
     resp = {"candidate": cand_res.data, "applications": app_res.data}
     
     return Response(resp, status=status.HTTP_200_OK)
@@ -64,7 +66,7 @@ def updateCandidateView(request, candidate_id):
     except Candidate.DoesNotExist:
         return Response({'error': 'No such Candidate with that primary key'}, status=status.HTTP_404_NOT_FOUND)
     
-    serializer = CandidateSerializer(candidate, data=request.data)
+    serializer = CandidateSerializer(candidate, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
