@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.light {
+  --text-muted: 153, 153, 153;
+  --primary-accent: 188, 211, 255;
+};
