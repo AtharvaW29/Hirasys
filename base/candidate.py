@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from application.models import Application
 
 class Candidate(models.Model):
     phone_regex = RegexValidator(
@@ -14,7 +13,7 @@ class Candidate(models.Model):
     education = models.JSONField(max_length=255)
     experiences = models.JSONField(max_length=300, blank=True, null=True)
     skills = models.JSONField(max_length=300, blank=True, null=True)
-    application = models.ForeignKey(Application, on_delete=models.CASCADE, blank=True, null=True)
+    # application = models.ForeignKey(Application, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name

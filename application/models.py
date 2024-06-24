@@ -1,10 +1,11 @@
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
+from base.candidate import Candidate
 
 class Application(models.Model):
     application_id = models.AutoField(primary_key=True)
-    candidate_id = models.IntegerField()
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='applications')
     applied_to_job = models.CharField(max_length=300)
     STATUS_CHOICES = (
         ('Applied', 'Applied'),
@@ -17,12 +18,12 @@ class Application(models.Model):
     scores = models.JSONField(blank=True, default=dict)
     cover_letter = models.CharField(max_length=500)
     interview_feedback = models.CharField(max_length=200)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)  # Data isolation for HR managers
+    # created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)  # Data isolation for HR managers
     application_date = models.DateTimeField(auto_now_add=True)
     job_name = models.CharField(max_length=300)
 
     def __str__(self):
-        return f"{self.candidate_id} - {self.applied_to_job.title}"
+        return f"{self.candidate_id} - {self.applied_to_job}"
     
     class Meta:
         ordering = ('-application_date', )

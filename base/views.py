@@ -6,7 +6,6 @@ from .serializers import CandidateSerializer
 from application.models import Application
 from application.serializers import ApplicationSerializer
 from rest_framework.decorators import api_view,authentication_classes, permission_classes
-from django.contrib.auth.models import User
 
 class CreateApplicationViewSet(generics.ListCreateAPIView):
     queryset = Candidate.objects.all()
@@ -16,20 +15,23 @@ class CreateApplicationViewSet(generics.ListCreateAPIView):
 # GET candidate and their application details
 @api_view(['GET'])
 def getCandidateView(request, candidate_id):
+    print(f"Received request for candidate ID: {candidate_id}")
+
     try:
         candidate = Candidate.objects.get(pk=candidate_id)
     except Candidate.DoesNotExist:
+        print("Candidate does not exist")
         return Response({'error': 'No such Candidate with that primary key'}, status=status.HTTP_404_NOT_FOUND)
-    
+
     applications = Application.objects.filter(candidate_id=candidate_id)
-    print(f"Applications for candidate {candidate_id}: {applications}") 
+
     app_res = ApplicationSerializer(applications, many=True)
     cand_res = CandidateSerializer(candidate)
 
-    print(f"Serialized applications: {app_res.data}") 
     resp = {"candidate": cand_res.data, "applications": app_res.data}
-    
     return Response(resp, status=status.HTTP_200_OK)
+
+
 
 #POST candidate details
 @api_view(['POST'])
@@ -58,7 +60,8 @@ def deleteCandidateView(request, candidate_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
     except Candidate.DoesNotExist:
         return Response({'error': 'No such Candidate with that primary key'}, status=status.HTTP_404_NOT_FOUND)
-    
+
+# UPDATE
 @api_view(['PUT'])
 def updateCandidateView(request, candidate_id):
     try:
