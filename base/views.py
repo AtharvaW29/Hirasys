@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from rest_framework import status, generics
 from rest_framework.response import Response
-from .candidate import Candidate
+from .models import Candidate
 from .serializers import CandidateSerializer
 from application.models import Application
 from application.serializers import ApplicationSerializer
 from rest_framework.decorators import api_view,authentication_classes, permission_classes
 
-class CreateApplicationViewSet(generics.ListCreateAPIView):
+class CreateCandidateViewSet(generics.ListCreateAPIView):
     queryset = Candidate.objects.all()
     serializer_class = CandidateSerializer
 
@@ -15,12 +15,9 @@ class CreateApplicationViewSet(generics.ListCreateAPIView):
 # GET candidate and their application details
 @api_view(['GET'])
 def getCandidateView(request, candidate_id):
-    print(f"Received request for candidate ID: {candidate_id}")
-
     try:
         candidate = Candidate.objects.get(pk=candidate_id)
     except Candidate.DoesNotExist:
-        print("Candidate does not exist")
         return Response({'error': 'No such Candidate with that primary key'}, status=status.HTTP_404_NOT_FOUND)
 
     applications = Application.objects.filter(candidate_id=candidate_id)
@@ -34,21 +31,21 @@ def getCandidateView(request, candidate_id):
 
 
 #POST candidate details
-@api_view(['POST'])
-def postCandidateView(request):
-    try:
-        candidate_data = request.data.get('candidate')
+# @api_view(['POST'])
+# def postCandidateView(request):
+#     try:
+#         candidate_data = request.data.get('candidate')
         
-        candidate_serializer = CandidateSerializer(data=candidate_data)
-        if candidate_serializer.is_valid():
-            candidate = candidate_serializer.save()
-        else:
-            return Response(candidate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         candidate_serializer = CandidateSerializer(data=candidate_data)
+#         if candidate_serializer.is_valid():
+#             candidate = candidate_serializer.save()
+#         else:
+#             return Response(candidate_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        response_data = {"candidate": CandidateSerializer(candidate).data}
-        return Response(response_data, status=status.HTTP_201_CREATED)
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#         response_data = {"candidate": CandidateSerializer(candidate).data}
+#         return Response(response_data, status=status.HTTP_201_CREATED)
+#     except Exception as e:
+#         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 #DELETE a Candidate
 # views.py

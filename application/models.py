@@ -1,7 +1,8 @@
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
-from base.candidate import Candidate
+from base.models import Candidate
+from jobs.models import Job
 
 class Application(models.Model):
     application_id = models.AutoField(primary_key=True)
@@ -21,6 +22,7 @@ class Application(models.Model):
     # created_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)  # Data isolation for HR managers
     application_date = models.DateTimeField(auto_now_add=True)
     job_name = models.CharField(max_length=300)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="applications", null=True, blank=True)
 
     def __str__(self):
         return f"{self.candidate_id} - {self.applied_to_job}"

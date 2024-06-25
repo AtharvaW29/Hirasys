@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .candidate import Candidate
+from .models import Candidate
 
 
 class CandidateSerializer(serializers.ModelSerializer):
