@@ -13,6 +13,8 @@ class Candidate(models.Model):
     education = models.JSONField(max_length=255)
     experiences = models.JSONField(max_length=300, blank=True, null=True)
     skills = models.JSONField(max_length=300, blank=True, null=True)
+    profile_pic = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
     # application = models.ForeignKey(Application, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
