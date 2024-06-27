@@ -4,7 +4,6 @@ from django.db import models
    
 class HRManager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(unique=True)
     company = models.CharField(max_length=255)
     role = models.CharField(max_length=50, choices=[
         ('HRAdmin', 'HR Admin'),
