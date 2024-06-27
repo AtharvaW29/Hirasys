@@ -1,16 +1,20 @@
-from rest_framework import status, generics
-from rest_framework.decorators import api_view
+from rest_framework import status, generics, permissions
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import Application
 from .serializers import ApplicationSerializer
-# Create your views here.
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from manager.permissions import IsHRAdmin, IsHR, IsHREmp
+
 # Cretae an application
 class CreateApplicationViewSet(generics.ListCreateAPIView):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsHRAdmin | IsHR]
 
 #GET all applications
 @api_view(['GET'])
+@permission_classes([IsAuthenticated, DjangoModelPermissions, IsHRAdmin | IsHR | IsHREmp])
 def getApplicationView(request):
     applications = Application.objects.all()
     serializer = ApplicationSerializer(applications, many=True)
@@ -18,6 +22,7 @@ def getApplicationView(request):
 
 #UPDATE application
 @api_view(['PUT'])
+@permission_classes([IsAuthenticated, DjangoModelPermissions, IsHRAdmin | IsHR])
 def updateApplicationView(request, application_id):
     try:
         application = Application.objects.get(pk=application_id)
@@ -32,6 +37,7 @@ def updateApplicationView(request, application_id):
 
 #DELETE an application
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated, DjangoModelPermissions, IsHRAdmin])
 def deleteApplicationView(request, application_id):
     try:
         application = Application.objects.get(pk=application_id)

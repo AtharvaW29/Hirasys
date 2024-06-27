@@ -1,19 +1,23 @@
 from django.shortcuts import render
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from .models import Candidate
 from .serializers import CandidateSerializer
 from application.models import Application
 from application.serializers import ApplicationSerializer
-from rest_framework.decorators import api_view,authentication_classes, permission_classes
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from manager.permissions import IsHRAdmin, IsHR, IsHREmp
 
 class CreateCandidateViewSet(generics.ListCreateAPIView):
     queryset = Candidate.objects.all()
     serializer_class = CandidateSerializer
+    permission_classes = [IsAuthenticated, DjangoModelPermissions, IsHRAdmin | IsHR]
 
 
 # GET candidate and their application details
 @api_view(['GET'])
+@permission_classes([IsAuthenticated, DjangoModelPermissions, IsHRAdmin | IsHR | IsHREmp])
 def getCandidateView(request, candidate_id):
     try:
         candidate = Candidate.objects.get(pk=candidate_id)
@@ -50,6 +54,7 @@ def getCandidateView(request, candidate_id):
 #DELETE a Candidate
 # views.py
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated, DjangoModelPermissions, IsHRAdmin])
 def deleteCandidateView(request, candidate_id):
     try:
         candidate = Candidate.objects.get(pk=candidate_id)
@@ -60,6 +65,7 @@ def deleteCandidateView(request, candidate_id):
 
 # UPDATE
 @api_view(['PUT'])
+@permission_classes([IsAuthenticated, DjangoModelPermissions, IsHRAdmin | IsHR])
 def updateCandidateView(request, candidate_id):
     try:
         candidate = Candidate.objects.get(pk=candidate_id)
