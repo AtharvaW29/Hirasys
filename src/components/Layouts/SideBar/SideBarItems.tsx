@@ -1,14 +1,33 @@
 'use client'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-regular-svg-icons'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { useAnimate } from 'framer-motion'
 import { cn } from '@/utils/tw'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
-export const SideBarNavDrawer = () => {
+export type SideBarNavDrawerProps = {
+  title: string
+  link: string
+  items?: {
+    name: string
+    link: string
+  }[]
+  icon: React.ReactNode
+}
+
+export const SideBarNavDrawer = ({
+  title,
+  items = [],
+  link,
+  icon,
+}: SideBarNavDrawerProps) => {
+  const router = useRouter()
   const [scope, animate] = useAnimate()
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const pathname = usePathname()
 
   const toggleDrawer = () => {
     if (!isOpen) {
@@ -22,13 +41,29 @@ export const SideBarNavDrawer = () => {
     setIsOpen(!isOpen)
   }
 
+  useEffect(() => {
+    if (pathname.includes(link) && !isOpen) {
+      toggleDrawer()
+    }
+    if (!pathname.includes(link) && isOpen) {
+      toggleDrawer()
+    }
+  }, [pathname])
+
   return (
     <div ref={scope}>
       <div
-        className="flex p-3 w-full gap-2 items-center rounded-lg text-white cursor-pointer bg-primary "
-        onClick={() => toggleDrawer()}
+        className={cn(
+          'flex p-3 w-full gap-2 items-center rounded-lg select-none cursor-pointer text-text-muted transition-all ',
+          isOpen ? 'bg-primary text-primary-foreground' : ''
+        )}
+        onClick={() => {
+          toggleDrawer()
+          router.replace(link)
+        }}
       >
-        <FontAwesomeIcon icon={faUser} className="w-4 h-4" /> <p>Dashboard</p>
+        {icon}
+        <p>{title}</p>
         <FontAwesomeIcon
           icon={faChevronDown}
           className="ml-auto w-4 h-4"
@@ -42,30 +77,20 @@ export const SideBarNavDrawer = () => {
         style={{ height: 0 }}
         id="drawer"
       >
-        <div className="border-l-2 px-2">
-          <SideBarItem
-            name={`Accounts`}
-            icon={
-              <FontAwesomeIcon icon={faUser} className="w-[1rem] h-[1rem]" />
-            }
-          />
-        </div>
-        <div className="border-l-2 px-2">
-          <SideBarItem
-            name={`Accounts`}
-            icon={
-              <FontAwesomeIcon icon={faUser} className="w-[1rem] h-[1rem]" />
-            }
-          />
-        </div>
-        <div className="border-l-2 px-2">
-          <SideBarItem
-            name={`Accounts`}
-            icon={
-              <FontAwesomeIcon icon={faUser} className="w-[1rem] h-[1rem]" />
-            }
-          />
-        </div>
+        {items.map((item) => (
+          <div
+            key={item.link}
+            className={cn(
+              'border-l-2 px-2 transition-all',
+              pathname === item.link ? 'border-primary' : ''
+            )}
+            onClick={() => {
+              router.replace(item.link)
+            }}
+          >
+            <SideBarItem isActive={pathname === item.link} name={item.name} />
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -73,15 +98,10 @@ export const SideBarNavDrawer = () => {
 
 export type SideBarItemProps = {
   name: string
-  icon: React.ReactNode
   isActive?: boolean
 }
 
-export const SideBarItem = ({
-  name,
-  icon,
-  isActive = false,
-}: SideBarItemProps) => {
+export const SideBarItem = ({ name, isActive = false }: SideBarItemProps) => {
   return (
     <div
       className={cn(
@@ -89,7 +109,6 @@ export const SideBarItem = ({
         isActive ? 'bg-primary-accent text-primary' : ''
       )}
     >
-      {icon}
       {name}
     </div>
   )

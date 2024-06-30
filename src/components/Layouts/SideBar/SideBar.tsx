@@ -1,7 +1,21 @@
 import Image from 'next/image'
+import { faBorderAll, faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-regular-svg-icons'
-import { SideBarItem, SideBarNavDrawer } from './SideBarItems'
+import { SideBarNavDrawer } from './SideBarItems'
+
+const dashboardItems = [
+  { name: 'Messages', link: '/dashboard/messages' },
+  { name: 'Tasks', link: '/dashboard/tasks' },
+  {
+    name: 'Inbox',
+    link: '/dashboard/inbox',
+  },
+]
+
+const processItems = [
+  { name: 'Create new', link: '/process/create' },
+  { name: 'Edit', link: '/process/edit' },
+]
 
 const SideBar = () => {
   return (
@@ -13,11 +27,18 @@ const SideBar = () => {
         height={200}
       />
       <div className="space-y-3 ">
-        <SideBarNavDrawer />
-        <SideBarItem
-          isActive
-          name={`Accounts`}
-          icon={<FontAwesomeIcon icon={faUser} className="w-[1rem] h-[1rem]" />}
+        <SideBarNavDrawer
+          title="Dashboard"
+          link="/dashboard"
+          items={dashboardItems}
+          icon={<FontAwesomeIcon icon={faBorderAll} className="h-4 w-4" />}
+        />
+
+        <SideBarNavDrawer
+          title="Processes"
+          link="/process"
+          items={processItems}
+          icon={<FontAwesomeIcon icon={faGear} className="h-4 w-4" />}
         />
       </div>
     </div>
