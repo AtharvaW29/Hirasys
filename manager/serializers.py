@@ -14,11 +14,22 @@ class UserModelSerializer(serializers.ModelSerializer):
         }
 
     def validate_email(self, value):
+        if self.instance and self.instance.email == value:
+            return value
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("A user with this email already exists")
         return value
-    
+
+    def validate_username(self, value):
+        if self.instance and self.instance.username == value:
+            return value
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("A user with this username already exists")
+        return value
+
     def validate_password(self, value):
+        if self.instance and value == self.instance.password:
+            return value
         try:
             django_validate_password(value)
         except DjangoValidationError as e:
@@ -31,21 +42,20 @@ class UserModelSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            password = validated_data.pop('password')
+            instance.set_password(password)
+        return super().update(instance, validated_data)
+
 class HRManagerSerializer(serializers.ModelSerializer):
     user = UserModelSerializer()
-    username = serializers.CharField(source='user.username')
-    email = serializers.EmailField(source='user.email')
-    lastname = serializers.CharField(source='user.last_name')
-    firstname = serializers.CharField(source='user.first_name')
-    password = serializers.CharField(source='user.password', write_only=True, style={'input_type': 'password'})
 
     class Meta:
         model = HRManager
-        fields = ['id', 'username', 'email', 'lastname', 'firstname', 'password', 'company', 'role', 'created_at', 'updated_at', 'profile_pic']
+        fields = ['id', 'user', 'company', 'role', 'created_at', 'updated_at', 'profile_pic']
         extra_kwargs = {
             'id': {'read_only': True},
-            'created_at': {'read_only': True},
-            'updated_at': {'read_only': True},
         }
 
     def create(self, validated_data):
@@ -71,11 +81,11 @@ class HRManagerSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         user_data = validated_data.get('user', {})
         user = instance.user
-        
+
         user_serializer = UserModelSerializer(user, data=user_data, partial=True)
         user_serializer.is_valid(raise_exception=True)
         user_serializer.save()
-        
+
         instance.company = validated_data.get('company', instance.company)
         instance.role = validated_data.get('role', instance.role)
 
