@@ -2,6 +2,10 @@ import Image from 'next/image'
 import { faBorderAll, faGear } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SideBarNavDrawer } from './SideBarItems'
+import {
+  MageDashboardFill,
+  MaterialSymbolsSettingsOutline,
+} from '@/components/ui/icons'
 
 const dashboardItems = [
   { name: 'Messages', link: '/dashboard/messages' },
@@ -31,14 +35,19 @@ const SideBar = () => {
           title="Dashboard"
           link="/dashboard"
           items={dashboardItems}
-          icon={<FontAwesomeIcon icon={faBorderAll} className="h-4 w-4" />}
+          icon={<MageDashboardFill width={'1.2rem'} height={'1.2rem'} />}
         />
 
         <SideBarNavDrawer
           title="Processes"
           link="/process"
           items={processItems}
-          icon={<FontAwesomeIcon icon={faGear} className="h-4 w-4" />}
+          icon={
+            <MaterialSymbolsSettingsOutline
+              width={'1.2rem'}
+              height={'1.2rem'}
+            />
+          }
         />
       </div>
     </div>

@@ -105,7 +105,7 @@ export const SideBarItem = ({ name, isActive = false }: SideBarItemProps) => {
   return (
     <div
       className={cn(
-        'flex p-3 w-full gap-2 items-center rounded-lg text-text-muted cursor-pointer transition-colors',
+        'flex p-3 w-full gap-2 items-center rounded-lg text-text-muted cursor-pointer transition-colors select-none ',
         isActive ? 'bg-primary-accent text-primary' : ''
       )}
     >

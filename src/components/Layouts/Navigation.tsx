@@ -1,46 +1,24 @@
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from '@nextui-org/navbar'
-import { Button } from '@nextui-org/button'
-import Link from 'next/link'
+import { Input } from '@nextui-org/input'
+import { MingcuteSearchLine, SolarBellLinear } from '../ui/icons'
+import { Avatar } from '@nextui-org/avatar'
 
 const Navigation = () => {
   return (
-    <Navbar  className='h-[9vh] bg-overlay border-b-1 '>
-      <NavbarBrand>
-        <p className="font-bold text-inherit">ACME</p>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+    <div className="h-[9vh] bg-overlay border-b-1 sticky top-0 flex items-center pl-12 pr-3">
+      <Input
+        startContent={<MingcuteSearchLine className="text-text-muted" />}
+        placeholder="Search for Services"
+        variant="bordered"
+        className="w-[320px] text-text-muted"
+      />
+      <div className="ml-auto flex items-center gap-3">
+        <SolarBellLinear className="w-9 h-9 text-text-muted" />
+        <div className="border-l-1 px-4 flex items-center ">
+          <Avatar />
+          <p>Sakshi Upadhyay</p>
+        </div>
+      </div>
+    </div>
   )
 }
 
