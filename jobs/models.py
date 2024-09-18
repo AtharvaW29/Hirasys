@@ -1,18 +1,18 @@
-# Create your models here.
 from django.db import models
 from datetime import datetime
 from django.core.exceptions import ValidationError
 from manager.models import HRManager
+
 class Job(models.Model):
     job_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=300)
     employement_type = models.CharField(max_length=20)
     department = models.CharField(max_length=255)
-    skills_required = models.JSONField(max_length=200)
+    skills_required = models.JSONField()
     application_start_date = models.DateTimeField(default=datetime.now)
     application_end_date = models.DateTimeField(default=datetime.now)
-    created_by = models.ForeignKey(HRManager,on_delete=models.CASCADE ,related_name='created_by')
+    created_by = models.ForeignKey(HRManager, on_delete=models.CASCADE, related_name='created_jobs')
 
     def clean(self):
         # Validation for start and end dates

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     
     'base.apps.BaseConfig',
     'application.apps.ApplicationConfig',
+    'company.apps.CompanyConfig',
     'jobs.apps.JobsConfig',
     'manager.apps.ManagerConfig'
 ]

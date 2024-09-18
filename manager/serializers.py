@@ -53,7 +53,7 @@ class HRManagerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HRManager
-        fields = ['id', 'user', 'company', 'role', 'created_at', 'updated_at', 'profile_pic']
+        fields = ['id', 'user', 'email' , 'company', 'role', 'created_at', 'updated_at']
         extra_kwargs = {
             'id': {'read_only': True},
         }
@@ -70,7 +70,7 @@ class HRManagerSerializer(serializers.ModelSerializer):
         elif role == 'HR':
             group = Group.objects.get(name='HR')
         else:
-            group = Group.objects.get(name='HREmp')
+            group = Group.objects.get(name='Employee')
 
         user.groups.add(group)
         user.save()
@@ -95,7 +95,7 @@ class HRManagerSerializer(serializers.ModelSerializer):
         elif instance.role == 'HR':
             group = Group.objects.get(name='HR')
         else:
-            group = Group.objects.get(name='HREmp')
+            group = Group.objects.get(name='Employee')
         
         instance.user.groups.add(group)
         instance.user.save()
